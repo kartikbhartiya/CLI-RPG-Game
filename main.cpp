@@ -2,14 +2,13 @@
 #include <vector>
 using namespace std;
 
-int spam = 0;
 int damage = 0;
 int turn = 0;
 
 class movesets{
 public:
-    int energy,health;
-    movesets() : energy{100},health{100}{}; //constructor initializes everything to default
+    int energy,health,spam;
+    movesets() : energy{100},health{100},spam{0}{}; //constructor initializes everything to default
 
     ~movesets(){ //upon destruction of the instance
         cout<<"Game Over!"<<endl;
@@ -54,7 +53,44 @@ int main(){
     srand(time(0));
     movesets p1;
     movesets p2;
-    if(turn%2==0){}
-    else{}
+    cout<<"\nWelcome to the game\n"<<"(1) Fireball(Damage / Energy Consumption / Energy Regained) = 25,30,15\n"<<"(2) Claw Attack(Damage / Energy Consumption / Energy Regained) = 15,10,20\n"<<"(3) Frozen Breath(Damage / Energy Consumption / Energy Regained) = 20,25,10\n"<<"(4) Heal(Health Increase / Energy Consumption / Energy Regained) = 30,20,15";
+    int choice;
+    int temp = 0;
+    while(p1.health>0 && p2.health>0){
+    if(turn%2==0){
+        cout<<"\nPlease enter your choice Player 1:- ";
+        cin>>choice;
+        if(choice == 1){
+            temp = p1.Fireball();
+            if(temp==1){continue;}
+            else p1.spam++;
+        }
+        else if(choice == 2){p1.Claw_Attack();}
+        else if(choice == 3){p1.Frozen_Breath();}
+        else{p1.heal();}
+        if(choice!=1)p1.spam = 0;
+        cout<<"Player 1 stats\n-----------------------------\n";
+        cout<<p1;
+    }
+    else{
+        cout<<"\nPlease enter your choice Player 2:- ";
+        cin>>choice;
+        if(choice == 1){
+            temp = p2.Fireball();
+            if(temp==1) continue;
+            else p2.spam++;
+        }
+        else if(choice == 2){p2.Claw_Attack();}
+        else if(choice == 3){p2.Frozen_Breath();}
+        else{p2.heal();}
+        p2.spam = 0;
+        cout<<"Player 2 stats\n-----------------------------\n";
+        cout<<p2;
+        if(choice!=1)p2.spam = 0;
+    }
+    turn++;
+    }
+    if((turn-1)%2 == 0) cout<<"Player 1 Won!!\n";
+    else cout<<"Player 2 Won!!\n";
     cin.get(); //Avoids the closing of terminal
 }
