@@ -10,9 +10,9 @@ public:
     int energy,health,spam;
     movesets() : energy{100},health{100},spam{0}{}; //constructor initializes everything to default
 
-    ~movesets(){ //upon destruction of the instance
+    /*~movesets(){ //upon destruction of the instance
         cout<<"Game Over!"<<endl;
-    }
+    }*/
 
     int Fireball(){
         if(spam%2 != 0){
@@ -53,10 +53,13 @@ int main(){
     srand(time(0));
     movesets p1;
     movesets p2;
-    cout<<"\nWelcome to the game\n"<<"(1) Fireball(Damage / Energy Consumption / Energy Regained) = 25,30,15\n"<<"(2) Claw Attack(Damage / Energy Consumption / Energy Regained) = 15,10,20\n"<<"(3) Frozen Breath(Damage / Energy Consumption / Energy Regained) = 20,25,10\n"<<"(4) Heal(Health Increase / Energy Consumption / Energy Regained) = 30,20,15";
+    cout<<"\nWelcome to the game\n"<<"(1) Player vs Player\n"<<"(2) Player vs AI\n----------------------\n"<<"(1) Fireball(Damage / Energy Consumption / Energy Regained) = 25,30,15\n"<<"(2) Claw Attack(Damage / Energy Consumption / Energy Regained) = 15,10,20\n"<<"(3) Frozen Breath(Damage / Energy Consumption / Energy Regained) = 20,25,10\n"<<"(4) Heal(Health Increase / Energy Consumption / Energy Regained) = 30,20,15";
+    int mode,ab;
+    cout<<"\nPlease enter the game mode:- ";
+    cin>>mode;
     int choice;
     int temp = 0;
-    while(p1.health>0 && p2.health>0){
+    while((p1.health>0 && p2.health>0)&&(p1.energy>0&&p2.energy>0)){
     if(turn%2==0){
         cout<<"\nPlease enter your choice Player 1:- ";
         cin>>choice;
@@ -69,10 +72,12 @@ int main(){
         else if(choice == 3){p1.Frozen_Breath();}
         else{p1.heal();}
         if(choice!=1)p1.spam = 0;
-        cout<<"Player 1 stats\n-----------------------------\n";
+        cout<<"Player 1 and Player 2 stats\n-----------------------------\n";
         cout<<p1;
+        cout<<"Player 2 Health = "<<p2.health - damage;
     }
-    else{
+    if(mode == 1){
+    if(turn%2!=0){
         cout<<"\nPlease enter your choice Player 2:- ";
         cin>>choice;
         if(choice == 1){
@@ -84,13 +89,32 @@ int main(){
         else if(choice == 3){p2.Frozen_Breath();}
         else{p2.heal();}
         p2.spam = 0;
-        cout<<"Player 2 stats\n-----------------------------\n";
+        cout<<"Player 1 and Player 2 stats\n-----------------------------\n";
         cout<<p2;
+        cout<<"Player 1 Health = "<<p2.health - damage;
         if(choice!=1)p2.spam = 0;
+        }
+    }
+    else{
+        if(turn%2!=0){
+            ab = rand()%3;
+            if(p2.health<30) p2.heal();
+            else if(ab == 0) p2.Claw_Attack();
+            else if(ab == 1) p2.Frozen_Breath();
+            else{
+                temp = p1.Fireball();
+                if(temp==1){continue;}
+                else p1.spam++;
+            }
+            cout<<"Player 2 and Player 1 stats\n-----------------------------\n";
+            cout<<p2;
+            cout<<"Player 1 Health = "<<p1.health - damage;
+            if(choice!=1)p2.spam = 0;
+        }
     }
     turn++;
-    }
     if((turn-1)%2 == 0) cout<<"Player 1 Won!!\n";
     else cout<<"Player 2 Won!!\n";
+}
     cin.get(); //Avoids the closing of terminal
 }
