@@ -2,17 +2,13 @@
 #include <vector>
 using namespace std;
 
-int damage = 0;
+int damage = 0; //Damage works by alternative basis by storing the record of previous previous move
 int turn = 0;
 
 class movesets{
 public:
     int energy,health,spam;
     movesets() : energy{100},health{100},spam{0}{}; //constructor initializes everything to default
-
-    /*~movesets(){ //upon destruction of the instance
-        cout<<"Game Over!"<<endl;
-    }*/
 
     int Fireball(){
         if(spam%2 != 0){
@@ -74,7 +70,7 @@ int main(){
         if(choice!=1)p1.spam = 0;
         cout<<"Player 1 and Player 2 stats\n-----------------------------\n";
         cout<<p1;
-        cout<<"Player 2 Health = "<<p2.health - damage;
+        cout<<"Player 2 Health = "<<p2.health - damage<<endl;
     }
     if(mode == 1){
     if(turn%2!=0){
@@ -91,30 +87,41 @@ int main(){
         p2.spam = 0;
         cout<<"Player 1 and Player 2 stats\n-----------------------------\n";
         cout<<p2;
-        cout<<"Player 1 Health = "<<p2.health - damage;
+        cout<<"Player 1 Health = "<<p2.health - damage<<endl;
         if(choice!=1)p2.spam = 0;
         }
     }
     else{
         if(turn%2!=0){
             ab = rand()%3;
-            if(p2.health<30) p2.heal();
-            else if(ab == 0) p2.Claw_Attack();
-            else if(ab == 1) p2.Frozen_Breath();
+            cout<<endl;
+            if(p2.health<30){
+            cout<<"AI move:- Health\n";
+            p2.heal();
+            }
+            else if(ab == 0){
+            cout<<"AI move:- Claw Attack\n";
+            p2.Claw_Attack();
+            }
+            else if(ab == 1){
+                cout<<"AI move:- Frozen Breath\n";
+                p2.Frozen_Breath();
+            }
             else{
                 temp = p2.Fireball();
                 if(temp==1){continue;}
                 else p2.spam++;
+                cout<<"AI move:- Fireball\n";
             }
             cout<<"Player 2 and Player 1 stats\n-----------------------------\n";
             cout<<p2;
-            cout<<"Player 1 Health = "<<p1.health - damage;
+            cout<<"Player 1 Health = "<<p1.health - damage<<endl;
             if(choice!=1)p2.spam = 0;
         }
     }
     turn++;
-    if((turn-1)%2 == 0) cout<<"Player 1 Won!!\n";
-    else cout<<"Player 2 Won!!\n";
 }
+    if(p1.health<=0) cout<<"Player 1 Won!!\n";
+    else cout<<"Player 2 Won!!\n";
     cin.get(); //Avoids the closing of terminal
 }
