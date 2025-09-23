@@ -102,9 +102,9 @@ int main(){
             else if(ab == 0) p2.Claw_Attack();
             else if(ab == 1) p2.Frozen_Breath();
             else{
-                temp = p1.Fireball();
+                temp = p2.Fireball();
                 if(temp==1){continue;}
-                else p1.spam++;
+                else p2.spam++;
             }
             cout<<"Player 2 and Player 1 stats\n-----------------------------\n";
             cout<<p2;
