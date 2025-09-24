@@ -27,7 +27,7 @@ Built quickly to get hands-on experience with classes, constructors, and operato
 
 - **Deferred Damage System**:  
   Damage is stored in a global variable `damage` and applied to the **opponent at the start of their next turn**.  
-  ```cpp
+
   
   ## ⚔️ Mechanics
 
